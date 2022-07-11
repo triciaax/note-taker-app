@@ -14,6 +14,7 @@ app.use(express.json());
 // to create a new note, post to /api/notes
 app.post('/api/notes', (req, res) => {
     let note = req.body;
+    // without utf-8, it will not return readable json
     let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf-8"));
     let length = noteList.length;
 
