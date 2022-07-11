@@ -1,6 +1,7 @@
 const fs = require("fs");
 const express = require("express");
 const path = require("path");
+const { request } = require("http");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +15,7 @@ app.use(express.json());
 // to create a new note, post to /api/notes
 app.post('/api/notes', (req, res) => {
     let note = req.body;
-    let noteList = JSON.parse(fs.readFileSync("./db/db.json"));
+    let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf-8"));
     let length = noteList.length;
 
     // assign the note an ID equal to the length of the list
@@ -41,5 +42,20 @@ app.get("/api/notes", (req, res) => {
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
 })
+
+//  delete route
+// sending a delete request with a note id to /api/notes/:id will delete the note
+app.delete("/api/notes/:id", (req, res) => {
+    let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf-8"));
+    let noteId = req.params.id;
+
+    noteList = noteList.filter(note => {
+        return note.id != noteId;
+    })
+
+    fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+    res.json(noteList);
+});
+
 
 app.listen(PORT, () => console.log("listening on port " + PORT));
