@@ -33,7 +33,8 @@ app.get("/notes", (req, res) => {
 
 // API route to return the db.json file
 app.get("/api/notes", (req, res) => {
-    res.sendFile(__dirname, "/db/db.json");
+    let db = JSON.parse(fs.readFileSync('./db/db.json', "utf-8"));
+    res.json(db);
 })
 
 // for all other urls, return the index file
