@@ -20,7 +20,7 @@ This application can be used to take notes and save them. Users can add a title 
 6. Click the save icon to save your note. It should populate on the right side of the application.
 7. To delete your note, click the red trash can icon on the right side of the application (right of your note title and description).
    
-## Screenshots
+## Screenshot
 ![Screenshot](Develop/public/assets/Screenshot.png)
 
 ## Links
